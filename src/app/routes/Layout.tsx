@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { Outlet } from "react-router-dom";
 
 const Layout = ({ children }: PropsWithChildren<{}>) => {
   return (
@@ -20,7 +21,9 @@ const Layout = ({ children }: PropsWithChildren<{}>) => {
           <div>Search</div>
         </div>
       </header>
-      <div className="flex flex-1">{children}</div>
+      <div className="flex flex-1">
+        <Outlet />
+      </div>
       <footer className="flex gap-10 justify-center">
         <div className="flex flex-col">
           <span>Movie-app</span>

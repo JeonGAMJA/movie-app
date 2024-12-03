@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import "../../shared/styles/App.css";
-import Home from "../../pages/Home";
-import Detail from "../../pages/Detail";
-import Login from "../../pages/Login";
-import Signup from "../../pages/Signup";
+import "../../f_shared/styles/App.css";
+import Home from "../../b_pages/Home";
+import Detail from "../../b_pages/Detail";
+import Login from "../../b_pages/Login";
+import Signup from "../../b_pages/Signup";
 import Layout from "./Layout";
 
 function App() {
