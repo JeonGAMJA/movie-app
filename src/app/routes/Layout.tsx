@@ -1,7 +1,6 @@
-import { PropsWithChildren } from "react";
 import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }: PropsWithChildren<{}>) => {
+const Layout = () => {
   return (
     <div className="bg-black text-white w-full flex flex-col min-h-screen">
       <header className="w-full flex justify-between p-[20px] items-center">
@@ -24,7 +23,7 @@ const Layout = ({ children }: PropsWithChildren<{}>) => {
       <div className="flex flex-1">
         <Outlet />
       </div>
-      <footer className="flex gap-10 justify-center">
+      <footer className="flex gap-[30px] justify-center w-full">
         <div className="flex flex-col">
           <span>Movie-app</span>
           <p>c 2024 Movie-app 어쩌구</p>
