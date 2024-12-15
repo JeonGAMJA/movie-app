@@ -1,33 +1,66 @@
+import MovieList from "./ui/MovieList";
+import MovieSlide from "./ui/MovieSlide";
+
 const Home = () => {
+  const LIST_CONFIGS = [
+    {
+      title: "오늘의 콘텐츠",
+      buttons: [
+        { title: "오늘", endpoint: ["/trending/movie/day"] },
+        { title: "이번 주", endpoint: ["/trending/movie/week"] },
+      ],
+    },
+    {
+      title: "인기 콘텐츠",
+      buttons: [
+        {
+          title: "영화관",
+          endpoint: ["/movie/now_playing?region=KR&language=ko-kr&page=1"],
+        },
+        {
+          title: "스트리밍",
+          endpoint: [
+            "/discover/movie?sort_by=popularity.desc&with_watch_monetization_types=flatrate&region=ko-kr",
+          ],
+        },
+        { title: "TV", endpoint: ["/discover/tv?sort_by=popularity.desc"] },
+        {
+          title: "대여",
+          endpoint: ["/discover/movie?watch_region=KR&include_video=true"],
+        },
+      ],
+    },
+    {
+      title: "무료 콘텐츠",
+      buttons: [
+        {
+          title: "TV",
+          endpoint: [
+            "/discover/tv?with_watch_monetization_types=free&region=KR&language=ko-kr&sort_by=popularity.desc",
+          ],
+        },
+        {
+          title: "영화",
+          endpoint: [
+            "/discover/movie?with_watch_monetization_types=free&region=KR&language=ko-kr&sort_by=popularity.desc",
+          ],
+        },
+      ],
+    },
+  ];
+
   return (
-    <div>
-      <div>
-        <div className="flex gap-3">
-          <span>Title</span>
-          <div className="flex gap-3 bg-white border-[1px] rounded-[50px] border-red-300">
-            <button className="bg-white text-black border-[30px] p-[5px] rounded-[50px] border-[0px]">
-              Button
-            </button>
-            <button className="bg-white text-black border-[30px] p-[5px] rounded-[50px] border-[0px]">
-              Button
-            </button>
-          </div>
-        </div>
-        <div>
-          <div className="flex flex-col gap-[5px]">
-            <div className="relative w-[150px] h-[225px] rounded-lg bg-white">
-              <div>Card Image</div>
-              <div className="w-[34px] h-[34px] bg-blue-300 rounded-full absolute b-[5px]"></div>
-            </div>
-            <div>Title</div>
-            <div>Date</div>
-          </div>
-        </div>
+    <div className="flex flex-col gap-[30px] w-full pb-[100px]">
+      <MovieSlide />
+      <div className="flex flex-col gap-[30px] px-[60px]">
+        {LIST_CONFIGS.map((config) => (
+          <MovieList
+            title={config.title}
+            buttons={config.buttons}
+            key={config.title}
+          />
+        ))}
       </div>
-      <div>Latest Trailers</div>
-      <div>What's Popular</div>
-      <div>Free To Watch</div>
-      <div>Leaderboard</div>
     </div>
   );
 };
