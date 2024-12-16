@@ -4,6 +4,7 @@ interface InputProps {
   placeholder: string;
   name: string;
   value: string;
+  errorMessage: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
 }
 
@@ -14,7 +15,9 @@ const Input = ({
   onChange,
   name,
   value,
+  errorMessage,
 }: InputProps) => {
+  console.log(errorMessage);
   return (
     <>
       <label>{label}</label>
@@ -26,6 +29,7 @@ const Input = ({
         className="text-xl px-[20px] py-[10px] border-b-[1px] border-gray-500 flex focus:border-red-600"
         onChange={onChange}
       />
+      <span className="text-red-600">{errorMessage}</span>
     </>
   );
 };

@@ -34,13 +34,48 @@ const initialFormValue = {
 
 const Signup = () => {
   const [formValues, setFormValues] = useState(initialFormValue);
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
   const isMatch = formValues.password === formValues.confirmPassword;
+
+  const validateField = (field, value) => {
+    let error = "";
+
+    switch (field) {
+      case "email":
+        if (!value) error = "이메일을 입력해주세요.";
+        else if (!/\S+@\S+\.\S+/.test(value))
+          error = "유효한 이메일을 입력해주세요.";
+        break;
+      case "password":
+        if (!value) error = "비밀번호를 입력해주세요.";
+        else if (value.length < 6) error = "비밀번호는 6자 이상이어야 합니다.";
+        break;
+      case "confirmPassword":
+        if (!value) error = "비밀번호 확인을 입력해주세요.";
+        else if (value === formValues[password])
+          error = "비밀번호가 일치하지 않습니다.";
+        break;
+      case "username":
+        if (!value) error = "이름을 입력해주세요.";
+        break;
+      default:
+        break;
+    }
+
+    return error;
+  };
 
   const handleInputChange = (field) => (e) => {
     setFormValues((prevValues) => ({
       ...prevValues,
       [field]: e.target.value,
+    }));
+
+    const error = validateField(field, e.target.value);
+    setFormErrors((prevErrors) => ({
+      ...prevErrors,
+      [field]: error,
     }));
   };
 
@@ -85,6 +120,7 @@ const Signup = () => {
                   type={config.type}
                   name={config.name}
                   value={formValues[config.name]}
+                  errorMessage={formErrors[config.name]}
                   onChange={(e) => handleInputChange(config.name)(e)}
                   placeholder={config.placeholder}
                 />
