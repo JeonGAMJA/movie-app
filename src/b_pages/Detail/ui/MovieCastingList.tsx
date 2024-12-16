@@ -15,7 +15,7 @@ const MovieCastingList = ({
       const response = await tmdbClient.get(
         `${movieType ? `/${movieType}` : ""}/${movieId}/credits`
       );
-      console.log(response.data);
+
       setMovieCredit(response.data.cast);
     } catch (error) {
       console.error("Failed to fetch movies:", error);

@@ -24,8 +24,6 @@ const MovieList = ({ title, buttons }: MovieListProps) => {
     fetchMovies(buttons[0].endpoint[0]);
   }, []);
 
-  console.log(movies);
-
   return (
     <div className="flex flex-col">
       <div className="flex gap-10 items-center">

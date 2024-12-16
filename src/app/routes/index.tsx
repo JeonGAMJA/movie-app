@@ -6,6 +6,7 @@ import Login from "../../b_pages/Login";
 import Signup from "../../b_pages/Signup";
 import Layout from "./Layout";
 import Search from "../../b_pages/Search";
+import Like from "../../b_pages/Like";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/like" element={<Like />} />
       </Route>
     </Routes>
   );

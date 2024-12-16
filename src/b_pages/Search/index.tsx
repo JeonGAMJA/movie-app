@@ -32,7 +32,7 @@ const Search = () => {
   }, [debouncedInput]);
 
   return (
-    <div className="w-full z-10 min-h-[100vh] flex flex-col items-center px-[150px]">
+    <div className="w-full min-h-[100vh] flex flex-col items-center px-[150px]">
       <div className="py-[30px] w-[500px]">
         <input
           placeholder="검색"

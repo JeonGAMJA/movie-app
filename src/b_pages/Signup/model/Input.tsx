@@ -15,7 +15,6 @@ const Input = ({
   name,
   value,
 }: InputProps) => {
-  console.log(value);
   return (
     <>
       <label>{label}</label>

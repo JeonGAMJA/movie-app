@@ -1,5 +1,11 @@
 import { useEffect, useState } from "react";
 import { tmdbClient } from "../../../f_shared/api/fetchMovies";
+import { useAuth } from "../../../app/providers/AuthContext";
+import {
+  addToWishlist,
+  getWishlist,
+  removeFromWishlist,
+} from "../../../f_shared/lib/supabaseService";
 
 const MovieDetailCard = ({
   movieId,
@@ -8,20 +14,49 @@ const MovieDetailCard = ({
   movieId?: string;
   movieType?: string;
 }) => {
+  const { user } = useAuth();
   const [movieDetail, setMovieDetail] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
+  const [isInWishlist, setIsInWishlist] = useState(false);
 
   const fetchMovieDetail = async () => {
     try {
       const response = await tmdbClient.get(`/${movieType}/${movieId}`);
-      console.log(response.data);
+
       setMovieDetail(response.data);
     } catch (error) {
       console.error("Failed to fetch movies:", error);
     }
   };
 
+  const fetchWishlist = async () => {
+    try {
+      const wishlistItems = await getWishlist(user.id);
+      setWishlist(wishlistItems);
+      console.log(wishlistItems);
+      setIsInWishlist(wishlistItems.some((item) => item.item_id === movieId));
+      console.log(isInWishlist);
+    } catch (error) {
+      console.error("Failed to fetch wishlist:", error);
+    }
+  };
+
+  const toggleWishlist = async () => {
+    try {
+      if (isInWishlist) {
+        await removeFromWishlist(user.id, movieId);
+      } else {
+        await addToWishlist(user.id, movieId);
+      }
+      fetchWishlist();
+    } catch (error) {
+      console.error("위시리스트 업데이트 중 오류가 발생했습니다.");
+    }
+  };
+
   useEffect(() => {
     fetchMovieDetail();
+    fetchWishlist();
   }, [movieId]);
 
   return (
@@ -44,12 +79,29 @@ const MovieDetailCard = ({
                   />
                 </div>
                 <div className="flex flex-1 flex-col gap-5">
-                  <span className="text-4xl font-semibold">
-                    {movieDetail.title}{" "}
-                    <span className="font-thin text-gray-400">
-                      ({movieDetail.release_date.split("-")[0]})
-                    </span>
-                  </span>
+                  <div className="flex gap-5 text-4xl items-center">
+                    <div className="flex gap-2 items-center">
+                      <span className="font-semibold">
+                        {movieDetail.title}{" "}
+                      </span>
+                      <span className="font-thin text-gray-400">
+                        (
+                        {movieDetail.release_date &&
+                          movieDetail.release_date.split("-")[0]}
+                        )
+                      </span>
+                    </div>
+                    {user && (
+                      <button
+                        onClick={() => toggleWishlist()}
+                        className={`py-[5px] px-[15px] text-xl border-[1px] rounded-full hover:bg-red-600 hover:border-red-600 ${
+                          isInWishlist && "bg-red-600 border-red-600"
+                        }`}
+                      >
+                        찜하기
+                      </button>
+                    )}
+                  </div>
                   <div className="flex flex-col gap-1">
                     <span className="text-xl font-semibold">장르</span>
                     <div className="flex gap-3 font-light text-gray-300">
@@ -65,12 +117,6 @@ const MovieDetailCard = ({
                       {movieDetail.vote_average} 점
                     </div>
                   </div>
-                  {/* <div className="flex gap-3">
-                <button>list</button>
-                <button>like</button>
-                <button>bookmark</button>
-                <button>trailer</button>
-              </div> */}
                   <div className="flex flex-col gap-1">
                     <span className="text-xl font-semibold">줄거리</span>
                     <span className="font-light text-gray-300">

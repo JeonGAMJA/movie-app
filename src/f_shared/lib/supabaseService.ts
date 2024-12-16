@@ -32,6 +32,7 @@ export const supabaseLogout = async ({ onSuccess }) => {
 };
 
 export const supabaseLogin = async ({ email, password, onSuccess }) => {
+  console.log(email, password);
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
@@ -59,4 +60,42 @@ export const kakaoLogin = async ({ onSuccess }) => {
   } catch (err) {
     console.log(err.message);
   }
+};
+
+export const addToWishlist = async (userId, itemId) => {
+  const { data, error } = await supabase
+    .from("wishlist")
+    .insert([{ user_id: userId, item_id: itemId }]);
+
+  if (error) {
+    console.error("찜 추가 실패: ", error.message);
+    return null;
+  }
+  return data;
+};
+
+export const removeFromWishlist = async (userId, itemId) => {
+  const { data, error } = await supabase
+    .from("wishlist")
+    .delete()
+    .match({ user_id: userId, item_id: itemId });
+
+  if (error) {
+    console.error("찜 삭제 실패: ", error.message);
+    return null;
+  }
+  return data;
+};
+
+export const getWishlist = async (userId) => {
+  const { data, error } = await supabase
+    .from("wishlist")
+    .select("item_id, created_at")
+    .eq("user_id", userId);
+
+  if (error) {
+    console.error("찜 목록 조회 실패: ", error.message);
+    return [];
+  }
+  return data;
 };

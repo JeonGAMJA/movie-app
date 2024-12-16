@@ -9,17 +9,26 @@ const Layout = () => {
   const { user } = useAuth();
   const [isHeaderVisible, setHeaderVisible] = useState(true);
   const navigate = useNavigate();
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
   const currentPath = window.location.pathname;
-  console.log(user);
+
   useScrollDirection(
     () => setHeaderVisible(false),
     () => setHeaderVisible(true)
   );
-  console.log(user);
+
   const handleLogout = async () => {
     await supabaseLogout({
       onSuccess: () => navigate("/"),
     });
+  };
+
+  const handleMouseEnter = () => {
+    setIsMenuVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsMenuVisible(false);
   };
 
   return (
@@ -48,11 +57,32 @@ const Layout = () => {
                 <Link to="/search">Search</Link>
                 {user ? (
                   <>
-                    <button onClick={() => handleLogout()}>Log out</button>
-                    <img
-                      src={user.user_metadata.avatar_url}
-                      className="w-[40px] h-[40px] rounded-full"
-                    />
+                    <div
+                      className="relative"
+                      onMouseEnter={handleMouseEnter}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <img
+                        src={user.user_metadata.avatar_url}
+                        className="w-[40px] h-[40px] rounded-full"
+                      />
+                      {isMenuVisible && (
+                        <div className="absolute bg-red-600 overflow-hidden rounded-md w-[100px] right-1">
+                          <button
+                            onClick={() => handleLogout()}
+                            className="hover:bg-red-100 hover:text-red-600 text-white flex justify-center items-center w-full py-[10px]"
+                          >
+                            Log out
+                          </button>
+                          <Link
+                            to="/like"
+                            className="hover:bg-red-100 hover:text-red-600 text-white flex justify-center items-center w-full py-[10px]"
+                          >
+                            찜목록
+                          </Link>
+                        </div>
+                      )}
+                    </div>
                   </>
                 ) : (
                   <>
