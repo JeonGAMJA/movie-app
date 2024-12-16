@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import { tmdbClient } from "../../../f_shared/api/fetchMovies";
 import MovieCastingCard from "./MovieCastingCard";
 
-const MovieCastingList = ({
-  movieId,
-  movieType,
-}: {
-  movieId?: string;
-  movieType?: string;
-}) => {
+const MovieCastingList = ({ movieId, movieType }) => {
   const [movieCredit, setMovieCredit] = useState(null);
   const fetchMovieDetail = async () => {
     try {

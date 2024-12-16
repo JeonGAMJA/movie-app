@@ -3,15 +3,10 @@ import MovieCard from "./MovieCard";
 import MovieListButtons from "./MovieListButtons";
 import { tmdbClient } from "../../../f_shared/api/fetchMovies";
 
-interface MovieListProps {
-  title: string;
-  buttons: { title: string; endpoint: string[] }[];
-}
-
-const MovieList = ({ title, buttons }: MovieListProps) => {
+const MovieList = ({ title, buttons }) => {
   const [movies, setMovies] = useState([]);
 
-  const fetchMovies = async (endpoint: string[]) => {
+  const fetchMovies = async (endpoint) => {
     try {
       const response = await tmdbClient.get(`${endpoint}`);
       setMovies(response.data.results);

@@ -12,7 +12,7 @@ const Search = () => {
     setInputValue(value);
   };
 
-  const fetchSearchResults = async (query: string) => {
+  const fetchSearchResults = async (query) => {
     try {
       const response = await tmdbClient.get(
         `search/multi?query=${query}&language=ko-KR`

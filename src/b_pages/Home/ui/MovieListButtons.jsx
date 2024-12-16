@@ -1,11 +1,7 @@
 import { useState } from "react";
 import MovieListButton from "./MovieListButton";
 
-interface MovieListButtonsProps {
-  buttons: { title: string; endpoint: string[] }[];
-}
-
-const MovieListButtons = ({ buttons, fetchMovies }: MovieListButtonsProps) => {
+const MovieListButtons = ({ buttons, fetchMovies }) => {
   const [activeButton, setActiveButton] = useState(buttons[0].title);
 
   const handleClick = (title) => {

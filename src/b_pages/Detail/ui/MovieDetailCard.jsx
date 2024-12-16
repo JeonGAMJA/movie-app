@@ -7,13 +7,7 @@ import {
   removeFromWishlist,
 } from "../../../f_shared/lib/supabaseService";
 
-const MovieDetailCard = ({
-  movieId,
-  movieType,
-}: {
-  movieId?: string;
-  movieType?: string;
-}) => {
+const MovieDetailCard = ({ movieId, movieType }) => {
   const { user } = useAuth();
   const [movieDetail, setMovieDetail] = useState(null);
   const [wishlist, setWishlist] = useState([]);
