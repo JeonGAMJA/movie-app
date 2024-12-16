@@ -1,13 +1,3 @@
-interface InputProps {
-  label: string;
-  type: string;
-  placeholder: string;
-  name: string;
-  value: string;
-  errorMessage: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement> | string) => void;
-}
-
 const Input = ({
   label,
   type,
@@ -16,7 +6,7 @@ const Input = ({
   name,
   value,
   errorMessage,
-}: InputProps) => {
+}) => {
   console.log(errorMessage);
   return (
     <>
